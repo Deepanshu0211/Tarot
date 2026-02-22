@@ -13,6 +13,8 @@ const navItems = [
     { name: "Home", href: "/", icon: Home },
     { name: "About", href: "/about", icon: Sparkles },
     { name: "Shop", href: "/products", icon: Sparkles },
+    { name: "Blog", href: "/blog", icon: Sparkles },
+    { name: "Contact", href: "/contact", icon: Sparkles },
     { name: "Admin", href: "/admin", icon: Settings },
 ];
 
@@ -25,9 +27,14 @@ export default function Navigation() {
 
     return (
         <>
-            <nav className="flex justify-center fixed top-4 md:top-8 w-full z-40 px-4 pointer-events-none">
+            <motion.nav
+                initial={{ y: -100, opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                transition={{ duration: 0.8, ease: "easeOut", delay: 0.1 }}
+                className="flex justify-center fixed top-4 md:top-8 w-full z-40 px-4 pointer-events-none"
+            >
                 <div className="bg-noir/80 backdrop-blur-md border border-white/[0.08] rounded-full px-6 md:px-8 py-3 md:py-4 flex items-center justify-between w-full max-w-[95vw] md:max-w-max md:gap-12 shadow-2xl pointer-events-auto relative">
-                    <Link href="/" className="font-display text-xl font-light tracking-[0.1em] text-white hover:text-grey-300 transition-colors">
+                    <Link href="/" className="font-display text-xl font-light tracking-[0.1em] text-white hover:text-gold transition-colors">
                         Elara
                     </Link>
 
@@ -37,14 +44,14 @@ export default function Navigation() {
                             <Link
                                 key={item.href}
                                 href={item.href}
-                                className={`relative text-[11px] uppercase tracking-[0.2em] transition-all hover:-translate-y-0.5 ${pathname === item.href ? "text-white font-medium" : "text-grey-500 hover:text-white"
+                                className={`relative text-[11px] uppercase tracking-[0.2em] transition-all hover:-translate-y-0.5 ${pathname === item.href ? "text-gold font-medium" : "text-grey-500 hover:text-white"
                                     }`}
                             >
                                 {item.name}
                                 {pathname === item.href && (
                                     <motion.div
                                         layoutId="desktop-nav-indicator"
-                                        className="absolute -bottom-1.5 left-1/2 -translate-x-1/2 w-1 h-1 rounded-full bg-white"
+                                        className="absolute -bottom-1.5 left-1/2 -translate-x-1/2 w-1 h-1 rounded-full bg-gold"
                                     />
                                 )}
                             </Link>
@@ -55,7 +62,7 @@ export default function Navigation() {
                     <div className="flex items-center gap-2 md:gap-2">
                         <button
                             onClick={() => setIsCartOpen(true)}
-                            className="relative p-2 text-grey-500 hover:text-white transition-all hover:-translate-y-0.5"
+                            className="relative p-2 text-grey-500 hover:text-gold transition-all hover:-translate-y-0.5"
                             aria-label="Open Cart"
                         >
                             <ShoppingBag size={18} strokeWidth={1.5} />
@@ -65,7 +72,7 @@ export default function Navigation() {
                                         initial={{ scale: 0 }}
                                         animate={{ scale: 1 }}
                                         exit={{ scale: 0 }}
-                                        className="absolute top-0 right-0 bg-white text-noir text-[9px] font-bold w-4 h-4 flex items-center justify-center rounded-full"
+                                        className="absolute top-0 right-0 bg-gold text-noir text-[9px] font-bold w-4 h-4 flex items-center justify-center rounded-full"
                                     >
                                         {cartCount}
                                     </motion.span>
@@ -74,7 +81,7 @@ export default function Navigation() {
                         </button>
                         <button
                             onClick={() => setIsLoginOpen(true)}
-                            className="hidden md:flex p-2 text-grey-500 hover:text-white transition-all hover:-translate-y-0.5 relative"
+                            className="hidden md:flex p-2 text-grey-500 hover:text-gold transition-all hover:-translate-y-0.5 relative"
                             aria-label="Login"
                         >
                             <User size={18} strokeWidth={1.5} />
@@ -107,7 +114,7 @@ export default function Navigation() {
                                         onClick={() => setIsMobileMenuOpen(false)}
                                         className={clsx(
                                             "flex items-center gap-4 text-xs uppercase tracking-[0.2em] transition-colors rounded-lg p-2 -m-2",
-                                            pathname === item.href ? "text-white bg-white/[0.04]" : "text-grey-400 hover:text-white"
+                                            pathname === item.href ? "text-gold bg-white/[0.04]" : "text-grey-400 hover:text-white"
                                         )}
                                     >
                                         <item.icon size={18} strokeWidth={1.5} />
@@ -129,7 +136,7 @@ export default function Navigation() {
                         )}
                     </AnimatePresence>
                 </div>
-            </nav>
+            </motion.nav>
 
             <LoginModal isOpen={isLoginOpen} onClose={() => setIsLoginOpen(false)} />
         </>

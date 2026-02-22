@@ -4,7 +4,7 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { GlassCard } from "@/components/GlassCard";
 import { useCart } from "@/context/CartContext";
-import { ShoppingBag, ArrowDownUp } from "lucide-react";
+import { ShoppingBag, ArrowDownUp, ArrowLeft } from "lucide-react";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { Suspense, useEffect } from "react";
@@ -44,93 +44,120 @@ function ProductsContent() {
         });
 
     return (
-        <div className="space-y-10">
-            <div className="mt-6 md:mt-12">
-                <h1 className="font-display text-4xl md:text-5xl font-light text-white mb-3">Shop</h1>
-                <p className="text-grey-500 text-sm">Curated spiritual tools for your journey.</p>
-            </div>
-
-            <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
-                <div className="flex gap-2 overflow-x-auto pb-2 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
-                    {categories.map((cat) => (
-                        <button
-                            key={cat}
-                            onClick={() => setActiveCategory(cat)}
-                            className={`whitespace-nowrap px-4 py-2 rounded-lg text-xs tracking-wider uppercase font-medium transition-all ${activeCategory === cat
-                                ? "bg-white text-noir"
-                                : "bg-white/[0.04] text-grey-500 hover:text-white hover:bg-white/[0.08]"
-                                }`}
-                        >
-                            {cat}
-                        </button>
-                    ))}
+        <div className="bg-noir min-h-screen">
+            {/* Header */}
+            <div className="relative py-28 text-center overflow-hidden">
+                <div className="absolute inset-0 z-0">
+                    <img
+                        src="https://images.unsplash.com/photo-1602523961358-f9f03dd557db?q=80&w=1920&auto=format&fit=crop"
+                        alt=""
+                        className="w-full h-full object-cover opacity-20"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-b from-noir via-noir/80 to-noir" />
                 </div>
-
-                <div className="relative shrink-0 w-48">
-                    <div className="absolute inset-y-0 left-3 flex items-center pointer-events-none">
-                        <ArrowDownUp size={14} className="text-grey-500" />
-                    </div>
-                    <select
-                        value={sortBy}
-                        onChange={(e) => setSortBy(e.target.value)}
-                        className="w-full bg-white/[0.02] border border-white/[0.08] text-white text-xs tracking-wider uppercase font-medium rounded-lg py-2.5 pl-9 pr-8 appearance-none focus:outline-none focus:border-grey-500 cursor-pointer"
+                <div className="relative z-10 max-w-4xl mx-auto px-5">
+                    <Link
+                        href="/"
+                        className="inline-flex items-center gap-2 text-gold hover:text-gold-light transition-colors mb-8 text-xs uppercase tracking-[0.2em] font-medium"
                     >
-                        <option value="Featured" className="bg-noir text-white">Featured</option>
-                        <option value="Price: Low to High" className="bg-noir text-white">Price: Low to High</option>
-                        <option value="Price: High to Low" className="bg-noir text-white">Price: High to Low</option>
-                    </select>
-                    <div className="absolute inset-y-0 right-3 flex items-center pointer-events-none">
-                        <svg className="w-4 h-4 text-grey-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"></path></svg>
-                    </div>
+                        <ArrowLeft size={16} /> Back Home
+                    </Link>
+                    <h1 className="font-display text-5xl md:text-7xl text-white tracking-wide mb-4">
+                        The Shop
+                    </h1>
+                    <p className="text-gold text-sm tracking-[0.25em] uppercase">
+                        Curated Spiritual Tools for Your Journey
+                    </p>
                 </div>
             </div>
 
-            <motion.div
-                layout
-                className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-5"
-            >
-                <AnimatePresence>
-                    {filteredAndSortedProducts.map((product) => (
-                        <motion.div
-                            layout
-                            key={product.id}
-                            initial={{ opacity: 0, scale: 0.95 }}
-                            animate={{ opacity: 1, scale: 1 }}
-                            exit={{ opacity: 0, scale: 0.95 }}
-                            transition={{ duration: 0.3 }}
+            <div className="max-w-6xl mx-auto px-5 sm:px-8 pb-32">
+                <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-12">
+                    <div className="flex gap-2 overflow-x-auto pb-2 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
+                        {categories.map((cat) => (
+                            <button
+                                key={cat}
+                                onClick={() => setActiveCategory(cat)}
+                                className={`whitespace-nowrap px-6 py-3 rounded-full text-xs tracking-[0.2em] uppercase font-medium transition-all ${activeCategory === cat
+                                    ? "bg-gold text-noir"
+                                    : "bg-noir-light border border-white/10 text-grey-400 hover:text-white hover:border-gold/40"
+                                    }`}
+                            >
+                                {cat}
+                            </button>
+                        ))}
+                    </div>
+
+                    <div className="relative shrink-0 w-48">
+                        <div className="absolute inset-y-0 left-4 flex items-center pointer-events-none">
+                            <ArrowDownUp size={14} className="text-gold" />
+                        </div>
+                        <select
+                            value={sortBy}
+                            onChange={(e) => setSortBy(e.target.value)}
+                            className="w-full bg-noir-light border border-white/10 text-white text-xs tracking-[0.15em] uppercase font-medium py-3.5 pl-10 pr-8 appearance-none focus:outline-none focus:border-gold/40 cursor-pointer transition-colors"
                         >
-                            <Link href={`/products/${product.id}`}>
-                                <GlassCard className="h-full flex flex-col p-0 group cursor-pointer hover:bg-white/[0.04] transition-colors">
-                                    <div className="aspect-[4/5] w-full relative overflow-hidden rounded-t-xl bg-grey-900">
-                                        <img src={product.image} alt={product.name} className="object-cover w-full h-full grayscale group-hover:grayscale-0 transition-all duration-700 group-hover:scale-105" />
-                                    </div>
-                                    <div className="p-4 space-y-1.5">
-                                        <div className="text-[10px] text-grey-600 uppercase tracking-[0.2em]">{product.category}</div>
-                                        <h3 className="text-sm text-grey-300 line-clamp-2">{product.name}</h3>
-                                        <div className="flex justify-between items-center pt-2">
-                                            <span className="text-white text-sm">${product.price.toFixed(2)}</span>
-                                            <motion.button
-                                                whileTap={{ scale: 0.9 }}
-                                                onClick={(e) => { e.preventDefault(); e.stopPropagation(); addItem(product); }}
-                                                className="p-2 text-grey-600 hover:text-white transition-colors"
-                                            >
-                                                <ShoppingBag size={16} strokeWidth={1.5} />
-                                            </motion.button>
+                            <option value="Featured" className="bg-noir text-white">Featured</option>
+                            <option value="Price: Low to High" className="bg-noir text-white">Price: Low to High</option>
+                            <option value="Price: High to Low" className="bg-noir text-white">Price: High to Low</option>
+                        </select>
+                        <div className="absolute inset-y-0 right-4 flex items-center pointer-events-none">
+                            <svg className="w-4 h-4 text-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </div>
+                    </div>
+                </div>
+
+                <motion.div
+                    layout
+                    className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6"
+                >
+                    <AnimatePresence>
+                        {filteredAndSortedProducts.map((product) => (
+                            <motion.div
+                                layout
+                                key={product.id}
+                                initial={{ opacity: 0, scale: 0.95 }}
+                                animate={{ opacity: 1, scale: 1 }}
+                                exit={{ opacity: 0, scale: 0.95 }}
+                                transition={{ duration: 0.3 }}
+                            >
+                                <Link href={`/products/${product.id}`}>
+                                    <div className="h-full flex flex-col group cursor-pointer border border-white/5 rounded-xl overflow-hidden hover:border-gold/30 transition-all duration-300 bg-noir-light">
+                                        <div className="aspect-[4/5] w-full relative overflow-hidden bg-black">
+                                            <img src={product.image} alt={product.name} className="object-cover w-full h-full opacity-80 group-hover:opacity-100 transition-all duration-700 group-hover:scale-105" />
+                                        </div>
+                                        <div className="p-5 space-y-2">
+                                            <div className="flex justify-between items-start gap-4">
+                                                <div>
+                                                    <div className="text-[10px] text-gold uppercase tracking-[0.25em] font-semibold mb-1">{product.category}</div>
+                                                    <h3 className="text-sm font-display text-white line-clamp-2 leading-snug">{product.name}</h3>
+                                                </div>
+                                            </div>
+                                            <div className="flex justify-between items-center pt-3 border-t border-white/5">
+                                                <span className="text-gold text-sm font-medium">${product.price.toFixed(2)}</span>
+                                                <motion.button
+                                                    whileTap={{ scale: 0.9 }}
+                                                    onClick={(e) => { e.preventDefault(); e.stopPropagation(); addItem(product); }}
+                                                    className="p-2 -mr-2 text-grey-500 hover:text-gold transition-colors"
+                                                >
+                                                    <ShoppingBag size={18} strokeWidth={1.5} />
+                                                </motion.button>
+                                            </div>
                                         </div>
                                     </div>
-                                </GlassCard>
-                            </Link>
-                        </motion.div>
-                    ))}
-                </AnimatePresence>
-            </motion.div>
+                                </Link>
+                            </motion.div>
+                        ))}
+                    </AnimatePresence>
+                </motion.div>
+            </div>
         </div>
     );
 }
 
 export default function ProductsPage() {
     return (
-        <Suspense fallback={<div className="min-h-screen flex items-center justify-center text-grey-500 text-xs tracking-widest uppercase">Consulting the cards...</div>}>
+        <Suspense fallback={<div className="min-h-screen bg-noir flex items-center justify-center text-gold text-xs tracking-widest uppercase">Consulting the cards...</div>}>
             <ProductsContent />
         </Suspense>
     );

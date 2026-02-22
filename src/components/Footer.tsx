@@ -53,16 +53,16 @@ export default function Footer() {
                         <h4 className="text-xs uppercase tracking-[0.2em] text-white font-medium">Support</h4>
                         <ul className="space-y-4">
                             <li>
-                                <Link href="/about" className="text-grey-500 hover:text-white text-sm transition-colors">About Elara</Link>
+                                <Link href="/about" className="text-grey-500 hover:text-white text-sm transition-colors">About</Link>
                             </li>
                             <li>
-                                <Link href="#" className="text-grey-500 hover:text-white text-sm transition-colors">Shipping & Returns</Link>
+                                <Link href="/blog" className="text-grey-500 hover:text-white text-sm transition-colors">Blog</Link>
+                            </li>
+                            <li>
+                                <Link href="/contact" className="text-grey-500 hover:text-white text-sm transition-colors">Contact</Link>
                             </li>
                             <li>
                                 <Link href="#" className="text-grey-500 hover:text-white text-sm transition-colors">Privacy Policy</Link>
-                            </li>
-                            <li>
-                                <Link href="#" className="text-grey-500 hover:text-white text-sm transition-colors">Terms of Service</Link>
                             </li>
                         </ul>
                     </div>
