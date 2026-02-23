@@ -7,6 +7,7 @@ import Footer from "@/components/Footer";
 import WhatsAppButton from "@/components/WhatsAppButton";
 import CartDrawer from "@/components/CartDrawer";
 import { CartProvider } from "@/context/CartContext";
+import SplashLoader from "@/components/SplashLoader";
 
 const cormorant = Cormorant_Garamond({
   variable: "--font-cormorant",
@@ -51,6 +52,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${cormorant.variable} ${playfairDisplay.variable} ${montserrat.variable} ${cinzel.variable} antialiased`}>
         <CartProvider>
+          <SplashLoader />
           <MysticalBackground />
           <Navigation />
           <main className="min-h-screen">

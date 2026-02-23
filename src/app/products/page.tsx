@@ -243,9 +243,9 @@ function ProductsContent() {
                                             <div className={`h-full flex ${viewMode === "list" ? "flex-row h-[140px] md:h-[200px]" : "flex-col"} group cursor-pointer border border-white/5 rounded-sm overflow-hidden hover:border-gold/30 transition-all duration-500 bg-black/40 backdrop-blur-sm shadow-md`}>
 
                                                 {/* Image Section */}
-                                                <div className={`${viewMode === "list" ? "w-[110px] sm:w-[140px] md:w-[200px] border-r" : "w-full border-b"} aspect-[4/5] sm:aspect-auto shrink-0 relative overflow-hidden bg-black border-white/5`}>
+                                                <div className={`${viewMode === "list" ? "w-[110px] sm:w-[140px] md:w-[200px] h-full border-r" : "w-full aspect-[4/5] border-b"} shrink-0 relative overflow-hidden bg-noir border-white/5`}>
                                                     <div className="absolute inset-0 bg-gold/10 group-hover:bg-transparent transition-colors duration-500 z-10 mix-blend-overlay" />
-                                                    <img src={product.image} alt={product.name} className="object-cover w-full h-full opacity-80 group-hover:opacity-100 transition-transform duration-700 ease-in-out group-hover:scale-110" />
+                                                    <img src={product.image} alt={product.name} className="object-cover absolute inset-0 w-full h-full opacity-80 group-hover:opacity-100 transition-transform duration-700 ease-in-out group-hover:scale-110" />
                                                 </div>
 
                                                 {/* Content Section */}

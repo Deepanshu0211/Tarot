@@ -12,14 +12,14 @@ import { SingleConstellation, SparkleOverlay } from "@/components/Constellation"
 /* ────────────────── DATA ────────────────── */
 
 const newProducts = [
-  { id: "1", name: "Pendulum", price: 18.00, image: "https://images.unsplash.com/photo-1602519026685-0b20fc139cde?q=80&w=600&auto=format&fit=crop" },
+  { id: "1", name: "Pendulum", price: 18.00, image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTkPNnndScjVdfy4Aqr3lbpEt8O6V8KPKYdqA&s" },
   { id: "2", name: "The Green Witch Book", price: 35.00, image: "https://images.unsplash.com/photo-1544947950-fa07a98d237f?q=80&w=600&auto=format&fit=crop" },
-  { id: "3", name: "Smoke Cleansing Bowl", price: 25.00, image: "https://images.unsplash.com/photo-1608681297594-e33719bda1aa?q=80&w=600&auto=format&fit=crop" },
-  { id: "4", name: "Crystal Set", price: 25.00, image: "https://images.unsplash.com/photo-1567360216447-4e6f966ce1e9?q=80&w=600&auto=format&fit=crop" },
+  { id: "3", name: "Smoke Cleansing Bowl", price: 25.00, image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTsjOm4t0LhxniYdlnw4YqYAoCVNgg-_ouDxA&s" },
+  { id: "4", name: "Crystal Set", price: 25.00, image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT4ToiCciiMMj_wCGWZuHANmW4hfDh5klfbbw&s" },
 ];
 
 const collections = [
-  { label: "Crystals", cta: "SHOP NOW", href: "/products?category=Crystals", image: "https://images.unsplash.com/photo-1555580168-9de9be6911c6?q=80&w=600&auto=format&fit=crop" },
+  { label: "Crystals", cta: "SHOP NOW", href: "/products?category=Crystals", image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT4ToiCciiMMj_wCGWZuHANmW4hfDh5klfbbw&s" },
   { label: "Gifts", cta: "LET'S GO", href: "/products?category=Gifts", image: "https://images.unsplash.com/photo-1513885535751-8b9238bd345a?q=80&w=600&auto=format&fit=crop" },
   { label: "Candles", cta: "YES PLEASE", href: "/products?category=Candles", image: "https://images.unsplash.com/photo-1602523961358-f9f03dd557db?q=80&w=600&auto=format&fit=crop" },
 ];
@@ -244,19 +244,21 @@ export default function Home() {
                 transition={{ delay: index * 0.1, duration: 0.5 }}
                 className="group cursor-pointer"
               >
-                <div className="aspect-[4/5] overflow-hidden mb-6 rounded-sm relative shadow-md">
-                  <div className="absolute inset-0 bg-gold/10 group-hover:bg-transparent transition-colors duration-500 z-10 mix-blend-overlay" />
-                  <img
-                    src={product.image}
-                    alt={product.name}
-                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 ease-in-out opacity-90 group-hover:opacity-100"
-                  />
-                  <div className="absolute inset-0 border border-noir/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-20 pointer-events-none" />
-                </div>
-                <div className="text-center">
-                  <h3 className="text-noir font-display text-lg mb-2 tracking-wide group-hover:text-gold transition-colors">{product.name}</h3>
-                  <p className="text-grey-600 text-sm tracking-widest font-semibold">${product.price.toFixed(2)} AUD</p>
-                </div>
+                <Link href={`/products/${product.id}`} className="block">
+                  <div className="aspect-[4/5] overflow-hidden mb-6 rounded-sm relative shadow-md">
+                    <div className="absolute inset-0 bg-gold/10 group-hover:bg-transparent transition-colors duration-500 z-10 mix-blend-overlay" />
+                    <img
+                      src={product.image}
+                      alt={product.name}
+                      className="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 ease-in-out opacity-90 group-hover:opacity-100"
+                    />
+                    <div className="absolute inset-0 border border-noir/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-20 pointer-events-none" />
+                  </div>
+                  <div className="text-center">
+                    <h3 className="text-noir font-display text-lg mb-2 tracking-wide group-hover:text-gold transition-colors">{product.name}</h3>
+                    <p className="text-grey-600 text-sm tracking-widest font-semibold">${product.price.toFixed(2)} AUD</p>
+                  </div>
+                </Link>
               </motion.div>
             ))}
           </div>
@@ -288,7 +290,7 @@ export default function Home() {
           >
             <div className="arch-rounded overflow-hidden border-2 border-gold/20">
               <img
-                src="https://images.unsplash.com/photo-1602519026685-0b20fc139cde?q=80&w=600&auto=format&fit=crop"
+                src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT4ToiCciiMMj_wCGWZuHANmW4hfDh5klfbbw&s"
                 alt="New Products"
                 className="w-full aspect-[3/4] object-cover"
               />
