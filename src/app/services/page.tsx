@@ -57,7 +57,6 @@ export default function ServicesPage() {
 
     // Toggles
     const [activeTab, setActiveTab] = useState<"consultations" | "spells">("consultations");
-    const [showAllSpells, setShowAllSpells] = useState(false);
 
     // Initial load from URL sync
     useEffect(() => {
@@ -253,49 +252,40 @@ export default function ServicesPage() {
                                     </p>
                                 </div>
 
-                                {!showAllSpells ? (
-                                    <motion.button
-                                        whileHover={{ scale: 1.02 }}
-                                        whileTap={{ scale: 0.98 }}
-                                        onClick={() => setShowAllSpells(true)}
-                                        className="bg-transparent border border-white/20 text-white hover:text-noir hover:bg-white px-12 py-5 text-sm tracking-[0.3em] uppercase transition-all duration-500 inline-flex items-center gap-3"
-                                    >
-                                        View All 100+ Spells <Eye size={16} />
-                                    </motion.button>
-                                ) : (
-                                    <motion.div
-                                        initial={{ opacity: 0, height: 0 }}
-                                        animate={{ opacity: 1, height: "auto" }}
-                                        transition={{ duration: 0.8 }}
-                                        className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6 text-left"
-                                    >
-                                        {allSpells.map((spell, i) => {
-                                            const Icon = spell.icon;
-                                            return (
-                                                <motion.div
-                                                    key={spell.id}
-                                                    initial={{ opacity: 0, scale: 0.9 }}
-                                                    whileInView={{ opacity: 1, scale: 1 }}
-                                                    viewport={{ once: true, margin: "-50px" }}
-                                                    transition={{ delay: (i % 8) * 0.05, duration: 0.4 }}
-                                                    onClick={() => handleBookSession({ id: spell.id, title: spell.title, duration: "Custom Cast", price: spell.price })}
-                                                    className="border border-white/5 rounded-xl p-5 hover:border-gold/30 hover:bg-gold/[0.05] transition-all duration-300 bg-black/20 backdrop-blur-sm cursor-pointer group flex flex-col h-full"
-                                                >
-                                                    <div className="flex items-center justify-between mb-4">
-                                                        <div className="text-gold opacity-70 group-hover:opacity-100 group-hover:scale-110 transition-all duration-300">
-                                                            <Icon size={20} strokeWidth={1.5} />
-                                                        </div>
-                                                        <div className="text-gold/80 font-medium text-sm">
-                                                            ${spell.price}
-                                                        </div>
+                                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 text-left">
+                                    {allSpells.map((spell, i) => {
+                                        const Icon = spell.icon;
+                                        return (
+                                            <motion.div
+                                                key={spell.id}
+                                                initial={{ opacity: 0, scale: 0.9, y: 30 }}
+                                                whileInView={{ opacity: 1, scale: 1, y: 0 }}
+                                                viewport={{ once: true, margin: "-50px" }}
+                                                transition={{ delay: (i % 6) * 0.1, duration: 0.5 }}
+                                                onClick={() => handleBookSession({ id: spell.id, title: spell.title, duration: "Custom Cast", price: spell.price })}
+                                                className="border border-white/5 rounded-2xl p-8 hover:border-gold/40 hover:bg-gold/[0.04] transition-all duration-300 bg-black/40 backdrop-blur-md cursor-pointer group flex flex-col h-full shadow-lg hover:shadow-[0_0_30px_rgba(201,169,110,0.05)]"
+                                            >
+                                                <div className="flex items-center justify-between mb-6">
+                                                    <div className="text-gold opacity-80 group-hover:opacity-100 group-hover:scale-110 transition-all duration-500 bg-gold/5 p-4 rounded-full border border-gold/10 group-hover:border-gold/30">
+                                                        <Icon size={28} strokeWidth={1.5} />
                                                     </div>
-                                                    <h4 className="font-display text-white text-lg mb-2 group-hover:text-gold transition-colors">{spell.title}</h4>
-                                                    <p className="text-white/40 text-[11px] leading-relaxed flex-1">{spell.desc}</p>
-                                                </motion.div>
-                                            );
-                                        })}
-                                    </motion.div>
-                                )}
+                                                    <div className="text-2xl font-medium text-gold/90 tracking-wider">
+                                                        ${spell.price}
+                                                    </div>
+                                                </div>
+                                                <h4 className="font-display text-white text-2xl mb-3 group-hover:text-gold transition-colors">{spell.title}</h4>
+                                                <p className="text-white/50 text-sm leading-relaxed flex-1">{spell.desc}</p>
+
+                                                <div className="mt-6 w-full pt-6 border-t border-white/5">
+                                                    <div className="w-full py-3 border border-gold/30 text-gold rounded-lg text-xs tracking-wider uppercase group-hover:bg-gold group-hover:text-noir transition-all duration-300 flex justify-center items-center gap-2 shadow-[0_0_15px_rgba(201,169,110,0.05)] group-hover:shadow-[0_0_20px_rgba(201,169,110,0.3)]">
+                                                        <Sparkles size={14} />
+                                                        <span className="font-semibold">Claim Offer</span>
+                                                    </div>
+                                                </div>
+                                            </motion.div>
+                                        );
+                                    })}
+                                </div>
                             </div>
                         </motion.div>
                     )}
