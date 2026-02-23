@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Cormorant_Garamond, Playfair_Display, Montserrat } from "next/font/google";
+import { Cormorant_Garamond, Playfair_Display, Montserrat, Cinzel } from "next/font/google";
 import "./globals.css";
 import MysticalBackground from "@/components/MysticalBackground";
 import Navigation from "@/components/Navigation";
@@ -30,6 +30,13 @@ const montserrat = Montserrat({
   display: "swap",
 });
 
+const cinzel = Cinzel({
+  variable: "--font-cinzel",
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700", "800", "900"],
+  display: "swap",
+});
+
 export const metadata: Metadata = {
   title: "Mystical Magical — Your Modern Magick Shop",
   description: "Curated spiritual products, crystals, tarot readings, and mystical goods.",
@@ -42,7 +49,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${cormorant.variable} ${playfairDisplay.variable} ${montserrat.variable} antialiased`}>
+      <body className={`${cormorant.variable} ${playfairDisplay.variable} ${montserrat.variable} ${cinzel.variable} antialiased`}>
         <CartProvider>
           <MysticalBackground />
           <Navigation />

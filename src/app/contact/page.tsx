@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import Link from "next/link";
 import { ArrowLeft, Mail, Phone, MapPin, Instagram, Send } from "lucide-react";
 import { useState } from "react";
+import { SingleConstellation, SparkleOverlay } from "@/components/Constellation";
 
 export default function ContactPage() {
     const [formState, setFormState] = useState({ name: "", email: "", subject: "", message: "" });
@@ -27,6 +28,8 @@ export default function ContactPage() {
                         className="w-full h-full object-cover opacity-20"
                     />
                     <div className="absolute inset-0 bg-gradient-to-b from-noir via-noir/80 to-noir" />
+                    <SparkleOverlay />
+                    <SingleConstellation name="Orion" className="top-1/4 right-1/4 w-80 h-80 opacity-40" />
                 </div>
                 <div className="relative z-10 max-w-4xl mx-auto px-5">
                     <Link

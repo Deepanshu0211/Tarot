@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Home, Sparkles, Settings, ShoppingBag, User, Menu, X } from "lucide-react";
+import { Home, Sparkles, Settings, ShoppingBag, User, Menu, X, Info, BookOpen, Mail } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useCart } from "@/context/CartContext";
 import LoginModal from "./LoginModal";
@@ -11,10 +11,10 @@ import clsx from "clsx";
 
 const navItems = [
     { name: "Home", href: "/", icon: Home },
-    { name: "About", href: "/about", icon: Sparkles },
-    { name: "Shop", href: "/products", icon: Sparkles },
-    { name: "Blog", href: "/blog", icon: Sparkles },
-    { name: "Contact", href: "/contact", icon: Sparkles },
+    { name: "About", href: "/about", icon: Info },
+    { name: "Shop", href: "/products", icon: ShoppingBag },
+    { name: "Blog", href: "/blog", icon: BookOpen },
+    { name: "Contact", href: "/contact", icon: Mail },
     { name: "Admin", href: "/admin", icon: Settings },
 ];
 

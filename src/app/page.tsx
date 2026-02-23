@@ -3,10 +3,11 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { GlassCard } from "@/components/GlassCard";
-import { Calendar, ChevronRight, ShoppingBag, Sparkles, Star, Mail } from "lucide-react";
+import { Calendar, ChevronRight, ShoppingBag, Sparkles, Star, Mail, Moon, Sun, Heart, Shield, CircleDollarSign, Eye } from "lucide-react";
 import Link from "next/link";
 import { useCart } from "@/context/CartContext";
 import { BookingModal, SessionType } from "@/components/BookingModal";
+import { SingleConstellation, SparkleOverlay } from "@/components/Constellation";
 
 /* ────────────────── DATA ────────────────── */
 
@@ -24,47 +25,18 @@ const collections = [
 ];
 
 const sessions = [
-  { id: "s1", title: "Quick Insight", duration: "15 min", price: 30, description: "A brief 1-3 card pull for quick guidance or a yes/no question.", icon: "✦" },
-  { id: "s2", title: "Deep Dive", duration: "30 min", price: 55, description: "A full Celtic cross or 5-card spread for deeper clarity.", icon: "☽" },
-  { id: "s3", title: "Soul Purpose", duration: "1 hour", price: 100, description: "Comprehensive past, present, and future reading.", icon: "⚝" },
+  { id: "s1", title: "Quick Insight", duration: "15 min", price: 30, description: "A brief 1-3 card pull for quick guidance or a yes/no question.", icon: Eye },
+  { id: "s2", title: "Deep Dive", duration: "30 min", price: 55, description: "A full Celtic cross or 5-card spread for deeper clarity.", icon: Moon },
+  { id: "s3", title: "Soul Purpose", duration: "1 hour", price: 100, description: "Comprehensive past, present, and future reading.", icon: Sun },
 ];
 
 const spells = [
-  { id: "sp1", title: "Love Spell", price: 45, description: "Attract love and deepen existing connections with ancient enchantments.", icon: "♥" },
-  { id: "sp2", title: "Protection Spell", price: 40, description: "Shield yourself from negative energy and harmful intentions.", icon: "🛡" },
-  { id: "sp3", title: "Prosperity Spell", price: 50, description: "Open pathways to abundance, success, and financial flow.", icon: "✧" },
+  { id: "sp1", title: "Love Spell", price: 45, description: "Attract love and deepen existing connections with ancient enchantments.", icon: Heart },
+  { id: "sp2", title: "Protection Spell", price: 40, description: "Shield yourself from negative energy and harmful intentions.", icon: Shield },
+  { id: "sp3", title: "Prosperity Spell", price: 50, description: "Open pathways to abundance, success, and financial flow.", icon: CircleDollarSign },
 ];
 
-/* ────────────────── SPARKLE OVERLAY COMPONENT ────────────────── */
-
-function SparkleOverlay() {
-  const stars = Array.from({ length: 30 }, (_, i) => ({
-    id: i,
-    left: `${Math.random() * 100}%`,
-    top: `${Math.random() * 100}%`,
-    delay: Math.random() * 5,
-    size: Math.random() * 3 + 1,
-  }));
-
-  return (
-    <div className="absolute inset-0 pointer-events-none overflow-hidden z-10">
-      {stars.map((star) => (
-        <motion.div
-          key={star.id}
-          className="absolute rounded-full bg-white"
-          style={{
-            left: star.left,
-            top: star.top,
-            width: star.size,
-            height: star.size,
-          }}
-          animate={{ opacity: [0.1, 0.9, 0.1], scale: [0.8, 1.3, 0.8] }}
-          transition={{ duration: 3 + Math.random() * 2, repeat: Infinity, delay: star.delay, ease: "easeInOut" }}
-        />
-      ))}
-    </div>
-  );
-}
+/* ────────────────── DATA ────────────────── */
 
 /* ────────────────── HOME PAGE ────────────────── */
 
@@ -84,13 +56,15 @@ export default function Home() {
       {/* ═══════════════ HERO SECTION ═══════════════ */}
       <section className="relative min-h-[85vh] flex items-center justify-center overflow-hidden">
         {/* Background Image */}
-        <div className="absolute inset-0 z-0">
+        <div className="absolute inset-0 z-0 overflow-hidden flex items-center justify-center bg-noir">
           <img
-            src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=1920&auto=format&fit=crop"
-            alt=""
-            className="w-full h-full object-cover"
+            src="/mystical-bg.jpg"
+            alt="Mystical Background"
+            className="object-cover absolute w-full h-full md:w-[120vh] md:h-[100vw] md:rotate-90 max-w-none"
           />
-          <div className="absolute inset-0 bg-black/60" />
+          <div className="absolute inset-0 bg-black/75" />
+          {/* Smooth fade into the next Noir section */}
+          <div className="absolute inset-x-0 bottom-0 h-48 bg-gradient-to-t from-noir via-noir/80 to-transparent pointer-events-none" />
         </div>
 
         <SparkleOverlay />
@@ -137,7 +111,14 @@ export default function Home() {
       </section>
 
       {/* ═══════════════ CONSULTATION & SPELLS ROW ═══════════════ */}
-      <section className="bg-noir py-20 relative">
+      <section className="bg-noir py-20 relative overflow-hidden">
+        <style dangerouslySetInnerHTML={{
+          __html: `
+          .no-scroll::-webkit-scrollbar { display: none; }
+          .no-scroll { -ms-overflow-style: none; scrollbar-width: none; }
+        `}} />
+        <SingleConstellation name="Ursa Major" className="top-10 left-[5%] w-72 h-72 hidden md:block opacity-60" />
+        <SingleConstellation name="Orion" className="bottom-[5%] right-[5%] w-64 h-64 hidden lg:block opacity-60" />
         <SparkleOverlay />
         <div className="max-w-6xl mx-auto px-5 sm:px-8 relative z-20">
           <motion.div
@@ -161,87 +142,99 @@ export default function Home() {
               <span>Tarot Consultations</span>
               <Sparkles size={20} className="text-gold" />
             </h3>
-            <div className="grid md:grid-cols-3 gap-5">
-              {sessions.map((session, index) => (
-                <motion.div
-                  key={session.id}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true, margin: "-50px" }}
-                  transition={{ delay: index * 0.15, duration: 0.4 }}
-                >
-                  <div className="border border-gold/20 rounded-xl p-8 text-center hover:border-gold/40 transition-all duration-300 bg-noir-light/50 backdrop-blur-sm h-full flex flex-col">
-                    <div className="text-4xl mb-4">{session.icon}</div>
-                    <div className="text-[11px] text-gold tracking-[0.3em] uppercase mb-3">
-                      {session.duration}
+            <div className="flex md:grid md:grid-cols-3 gap-5 overflow-x-auto pb-6 md:pb-0 snap-x snap-mandatory no-scroll">
+              {sessions.map((session, index) => {
+                const Icon = session.icon;
+                return (
+                  <motion.div
+                    key={session.id}
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true, margin: "-50px" }}
+                    transition={{ delay: index * 0.15, duration: 0.4 }}
+                    className="shrink-0 w-[85%] sm:w-[60%] md:w-auto snap-center"
+                  >
+                    <div className="border border-white/5 rounded-xl p-8 text-center hover:border-gold/30 hover:bg-white/[0.02] transition-all duration-500 bg-black/40 backdrop-blur-md h-full flex flex-col items-center">
+                      <div className="mb-6 mt-2">
+                        <Icon strokeWidth={1} size={42} className="text-gold" />
+                      </div>
+                      <div className="text-[11px] text-gold tracking-[0.3em] uppercase mb-3">
+                        {session.duration}
+                      </div>
+                      <h4 className="font-display text-2xl text-white mb-4">{session.title}</h4>
+                      <p className="text-white/60 font-serif-heading text-lg mb-8 flex-1 leading-relaxed">{session.description}</p>
+                      <div className="text-3xl font-medium tracking-wider text-gold/90 mb-6">${session.price}</div>
+                      <motion.button
+                        whileHover={{ scale: 1.02 }}
+                        whileTap={{ scale: 0.97 }}
+                        onClick={() => handleBookSession(session)}
+                        className="w-full py-3 border border-gold/20 text-gold rounded-lg text-xs tracking-wider uppercase hover:bg-gold hover:text-noir transition-all duration-300 flex justify-center items-center gap-2"
+                      >
+                        <Calendar size={14} /> Book Session
+                      </motion.button>
                     </div>
-                    <h4 className="font-display text-2xl text-white mb-4">{session.title}</h4>
-                    <p className="text-grey-500 mb-8 flex-1 text-sm leading-relaxed">{session.description}</p>
-                    <div className="font-display text-3xl text-gold mb-6">${session.price}</div>
-                    <motion.button
-                      whileHover={{ scale: 1.02 }}
-                      whileTap={{ scale: 0.97 }}
-                      onClick={() => handleBookSession(session)}
-                      className="w-full py-3 border border-gold/30 text-gold rounded-lg text-sm tracking-wider uppercase hover:bg-gold hover:text-noir transition-all duration-300 flex justify-center items-center gap-2"
-                    >
-                      <Calendar size={14} /> Book Session
-                    </motion.button>
-                  </div>
-                </motion.div>
-              ))}
+                  </motion.div>
+                );
+              })}
             </div>
           </div>
 
           {/* Spells */}
           <div>
-            <h3 className="font-display text-2xl text-white text-center mb-8 flex items-center justify-center gap-3">
-              <Star size={20} className="text-gold" />
-              <span>Spell Casting</span>
-              <Star size={20} className="text-gold" />
+            <h3 className="font-display text-2xl text-white text-center mb-10 flex items-center justify-center gap-4">
+              <Star size={18} strokeWidth={1.5} className="text-gold opacity-70" />
+              <span className="tracking-widest uppercase text-lg">Spell Casting</span>
+              <Star size={18} strokeWidth={1.5} className="text-gold opacity-70" />
             </h3>
-            <div className="grid md:grid-cols-3 gap-5">
-              {spells.map((spell, index) => (
-                <motion.div
-                  key={spell.id}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true, margin: "-50px" }}
-                  transition={{ delay: index * 0.15, duration: 0.4 }}
-                >
-                  <div className="border border-gold/20 rounded-xl p-8 text-center hover:border-gold/40 transition-all duration-300 bg-noir-light/50 backdrop-blur-sm h-full flex flex-col">
-                    <div className="text-4xl mb-4">{spell.icon}</div>
-                    <h4 className="font-display text-2xl text-white mb-4">{spell.title}</h4>
-                    <p className="text-grey-500 mb-8 flex-1 text-sm leading-relaxed">{spell.description}</p>
-                    <div className="font-display text-3xl text-gold mb-6">${spell.price}</div>
-                    <motion.button
-                      whileHover={{ scale: 1.02 }}
-                      whileTap={{ scale: 0.97 }}
-                      onClick={() => handleBookSession({ id: spell.id, title: spell.title, duration: "Custom", price: spell.price })}
-                      className="w-full py-3 border border-gold/30 text-gold rounded-lg text-sm tracking-wider uppercase hover:bg-gold hover:text-noir transition-all duration-300 flex justify-center items-center gap-2"
-                    >
-                      <Sparkles size={14} /> Cast Spell
-                    </motion.button>
-                  </div>
-                </motion.div>
-              ))}
+            <div className="flex md:grid md:grid-cols-3 gap-5 overflow-x-auto pb-6 md:pb-0 snap-x snap-mandatory no-scroll">
+              {spells.map((spell, index) => {
+                const Icon = spell.icon;
+                return (
+                  <motion.div
+                    key={spell.id}
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true, margin: "-50px" }}
+                    transition={{ delay: index * 0.15, duration: 0.4 }}
+                    className="shrink-0 w-[85%] sm:w-[60%] md:w-auto snap-center"
+                  >
+                    <div className="border border-white/5 rounded-xl p-8 text-center hover:border-gold/30 hover:bg-white/[0.02] transition-all duration-500 bg-black/40 backdrop-blur-md h-full flex flex-col items-center">
+                      <div className="mb-6 mt-2">
+                        <Icon strokeWidth={1} size={42} className="text-gold" />
+                      </div>
+                      <h4 className="font-display text-2xl text-white mb-4">{spell.title}</h4>
+                      <p className="text-white/60 font-serif-heading text-lg mb-8 flex-1 leading-relaxed">{spell.description}</p>
+                      <div className="text-3xl font-medium tracking-wider text-gold/90 mb-6">${spell.price}</div>
+                      <motion.button
+                        whileHover={{ scale: 1.02 }}
+                        whileTap={{ scale: 0.97 }}
+                        onClick={() => handleBookSession({ id: spell.id, title: spell.title, duration: "Custom", price: spell.price })}
+                        className="w-full py-3 border border-gold/20 text-gold rounded-lg text-xs tracking-wider uppercase hover:bg-gold hover:text-noir transition-all duration-300 flex justify-center items-center gap-2"
+                      >
+                        <Sparkles size={14} /> Cast Spell
+                      </motion.button>
+                    </div>
+                  </motion.div>
+                );
+              })}
             </div>
           </div>
         </div>
       </section>
 
       {/* ═══════════════ SHOP OUR NEW PRODUCTS ═══════════════ */}
-      <section className="bg-white py-20">
-        <div className="max-w-6xl mx-auto px-5 sm:px-8">
+      <section className="bg-white py-24 relative">
+        <div className="max-w-6xl mx-auto px-5 sm:px-8 relative z-10">
           <motion.h2
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="font-display text-3xl sm:text-4xl text-noir text-center mb-14 tracking-wide"
+            className="font-display text-3xl sm:text-4xl text-noir text-center mb-16 tracking-wide"
           >
             Shop Our New Products
           </motion.h2>
 
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-10">
             {newProducts.map((product, index) => (
               <motion.div
                 key={product.id}
@@ -251,15 +244,19 @@ export default function Home() {
                 transition={{ delay: index * 0.1, duration: 0.5 }}
                 className="group cursor-pointer"
               >
-                <div className="aspect-square overflow-hidden mb-4 bg-grey-100 rounded-lg">
+                <div className="aspect-[4/5] overflow-hidden mb-6 rounded-sm relative shadow-md">
+                  <div className="absolute inset-0 bg-gold/10 group-hover:bg-transparent transition-colors duration-500 z-10 mix-blend-overlay" />
                   <img
                     src={product.image}
                     alt={product.name}
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 ease-in-out opacity-90 group-hover:opacity-100"
                   />
+                  <div className="absolute inset-0 border border-noir/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-20 pointer-events-none" />
                 </div>
-                <h3 className="text-noir text-sm font-medium mb-1">{product.name}</h3>
-                <p className="text-grey-600 text-sm">${product.price.toFixed(2)} AUD</p>
+                <div className="text-center">
+                  <h3 className="text-noir font-display text-lg mb-2 tracking-wide group-hover:text-gold transition-colors">{product.name}</h3>
+                  <p className="text-grey-600 text-sm tracking-widest font-semibold">${product.price.toFixed(2)} AUD</p>
+                </div>
               </motion.div>
             ))}
           </div>
@@ -267,16 +264,17 @@ export default function Home() {
       </section>
 
       {/* ═══════════════ NEW PRODUCTS BANNER ═══════════════ */}
-      <section className="relative overflow-hidden">
+      <section className="relative overflow-hidden py-24">
         <div className="absolute inset-0 z-0">
           <img
             src="https://images.unsplash.com/photo-1519735777090-ec97162dc266?q=80&w=1920&auto=format&fit=crop"
             alt=""
-            className="w-full h-full object-cover"
+            className="w-full h-full object-cover opacity-60"
           />
-          <div className="absolute inset-0 bg-black/70" />
+          <div className="absolute inset-0 bg-black/80" />
         </div>
 
+        <SingleConstellation name="Cygnus" className="top-[10%] left-[10%] w-64 h-64 hidden xl:block opacity-70" />
         <SparkleOverlay />
 
         <div className="relative z-20 max-w-6xl mx-auto px-5 sm:px-8 py-20 md:py-28 flex flex-col md:flex-row items-center gap-12 md:gap-20">
@@ -325,18 +323,18 @@ export default function Home() {
       </section>
 
       {/* ═══════════════ SHOP OUR COLLECTIONS ═══════════════ */}
-      <section className="bg-white py-20">
-        <div className="max-w-6xl mx-auto px-5 sm:px-8">
+      <section className="bg-white py-24 relative">
+        <div className="max-w-6xl mx-auto px-5 sm:px-8 relative z-10">
           <motion.h2
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="font-display text-3xl sm:text-4xl text-noir text-center mb-14 tracking-wide"
+            className="font-display text-3xl sm:text-4xl text-noir text-center mb-16 tracking-wide"
           >
             Shop Our Collections
           </motion.h2>
 
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 md:gap-10">
             {collections.map((col, index) => (
               <motion.div
                 key={col.label}
@@ -346,16 +344,17 @@ export default function Home() {
                 transition={{ delay: index * 0.15, duration: 0.5 }}
               >
                 <Link href={col.href}>
-                  <div className="relative aspect-[3/4] overflow-hidden group cursor-pointer rounded-lg">
+                  <div className="relative aspect-[3/4] overflow-hidden group cursor-pointer border border-white/5 rounded-sm">
                     <img
                       src={col.image}
                       alt={col.label}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                      className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-1000 ease-out opacity-80 group-hover:opacity-100"
                     />
-                    <div className="absolute inset-0 bg-black/40 group-hover:bg-black/50 transition-colors duration-300" />
-                    <div className="absolute inset-0 flex flex-col items-center justify-center z-10 text-center">
-                      <h3 className="font-display text-3xl sm:text-4xl text-white tracking-wider mb-4">{col.label}</h3>
-                      <span className="text-white text-xs tracking-[0.3em] uppercase border border-white/40 px-6 py-2 hover:bg-white hover:text-noir transition-all duration-300">
+                    <div className="absolute inset-0 bg-black/50 group-hover:bg-black/30 transition-colors duration-500" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-80 group-hover:opacity-60 transition-opacity duration-500" />
+                    <div className="absolute inset-0 flex flex-col items-center justify-end pb-12 z-10 text-center">
+                      <h3 className="font-display text-3xl sm:text-4xl text-white tracking-widest mb-6 group-hover:text-gold transition-colors duration-300">{col.label}</h3>
+                      <span className="text-white text-[10px] tracking-[0.4em] uppercase border-b border-white/40 pb-1 group-hover:border-gold group-hover:text-gold transition-all duration-300">
                         {col.cta}
                       </span>
                     </div>
@@ -368,7 +367,8 @@ export default function Home() {
       </section>
 
       {/* ═══════════════ JOIN THE CLUB ═══════════════ */}
-      <section className="bg-noir py-20 relative">
+      <section className="bg-noir py-24 relative overflow-hidden">
+        <SingleConstellation name="Cassiopeia" className="bottom-10 right-[15%] w-56 h-56 hidden md:block opacity-80" />
         <SparkleOverlay />
         <div className="max-w-2xl mx-auto px-5 sm:px-8 relative z-20 text-center">
           <motion.div

@@ -1,5 +1,13 @@
 @import "tailwindcss";
 
+@font-face {
+  font-family: 'Roashe';
+  src: url('/font/Roashe.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
 @theme {
   --color-noir: #0a0a0a;
   --color-noir-light: #141414;
@@ -19,7 +27,7 @@
   --color-cream: #f5efe6;
 
   --font-serif: var(--font-cormorant), "Apple Garamond", "Garamond", "Times New Roman", serif;
-  --font-display: var(--font-playfair-display), "Playfair Display", serif;
+  --font-display: 'Roashe', "Cinzel", serif;
   --font-body: var(--font-montserrat), "Montserrat", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
 
   --animate-float: float 8s ease-in-out infinite;

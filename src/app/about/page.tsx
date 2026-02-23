@@ -3,6 +3,7 @@
 import { motion, Variants } from "framer-motion";
 import Link from "next/link";
 import { ArrowLeft, Sparkles } from "lucide-react";
+import { SingleConstellation, SparkleOverlay } from "@/components/Constellation";
 
 export default function AboutPage() {
     const container: Variants = {
@@ -36,6 +37,9 @@ export default function AboutPage() {
                         className="w-full h-full object-cover opacity-20 portrait:opacity-30"
                     />
                     <div className="absolute inset-0 bg-gradient-to-b from-noir via-noir/80 to-noir" />
+                    <SparkleOverlay />
+                    <SingleConstellation name="Cygnus" className="top-10 left-10 w-64 h-64" />
+                    <SingleConstellation name="Ursa Major" className="bottom-10 right-10 w-72 h-72 opacity-50" />
                 </div>
                 <div className="relative z-10 max-w-4xl mx-auto px-5">
                     <Link
@@ -130,6 +134,7 @@ export default function AboutPage() {
                         className="w-full h-full object-cover opacity-10"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-noir via-noir/90 to-noir" />
+                    <SingleConstellation name="Orion" className="top-0 left-1/4 w-96 h-96 opacity-30" />
                 </div>
 
                 <div className="relative z-10 flex flex-col items-center justify-center">
