@@ -110,6 +110,45 @@ export default function Home() {
         </motion.div>
       </section>
 
+      {/* ═══════════════ OFFERS MARQUEE ═══════════════ */}
+      <div className="bg-[#050505] py-2.5 sm:py-3.5 border-b border-white/5 overflow-hidden flex items-center relative z-20">
+        <style dangerouslySetInnerHTML={{
+          __html: `
+            @keyframes marquee {
+              0% { transform: translateX(0%); }
+              100% { transform: translateX(-50%); }
+            }
+            .animate-marquee {
+              display: flex;
+              width: max-content;
+              animation: marquee 40s linear infinite;
+            }
+          `
+        }} />
+        <div className="animate-marquee hover:[animation-play-state:paused] cursor-default">
+          {[...Array(2)].map((_, i) => (
+            <div key={i} className="flex items-center space-x-8 sm:space-x-16 px-4 sm:px-8 flex-shrink-0">
+              <span className="text-gold/70 tracking-[0.2em] sm:tracking-[0.3em] text-[9px] sm:text-[11px] uppercase whitespace-nowrap">Free Shipping For Orders Over $100</span>
+              <Star size={10} className="text-gold/30 flex-shrink-0" />
+              <span className="text-gold/70 tracking-[0.2em] sm:tracking-[0.3em] text-[9px] sm:text-[11px] uppercase whitespace-nowrap">New Arrivals Every Full Moon</span>
+              <Star size={10} className="text-gold/30 flex-shrink-0" />
+              <span className="text-gold/70 tracking-[0.2em] sm:tracking-[0.3em] text-[9px] sm:text-[11px] uppercase whitespace-nowrap">10% Off Your First Spell</span>
+              <Star size={10} className="text-gold/30 flex-shrink-0" />
+              <span className="text-gold/70 tracking-[0.2em] sm:tracking-[0.3em] text-[9px] sm:text-[11px] uppercase whitespace-nowrap">Book A Reading Today</span>
+              <Star size={10} className="text-gold/30 flex-shrink-0" />
+              <span className="text-gold/70 tracking-[0.2em] sm:tracking-[0.3em] text-[9px] sm:text-[11px] uppercase whitespace-nowrap">Free Shipping For Orders Over $100</span>
+              <Star size={10} className="text-gold/30 flex-shrink-0" />
+              <span className="text-gold/70 tracking-[0.2em] sm:tracking-[0.3em] text-[9px] sm:text-[11px] uppercase whitespace-nowrap">New Arrivals Every Full Moon</span>
+              <Star size={10} className="text-gold/30 flex-shrink-0" />
+              <span className="text-gold/70 tracking-[0.2em] sm:tracking-[0.3em] text-[9px] sm:text-[11px] uppercase whitespace-nowrap">10% Off Your First Spell</span>
+              <Star size={10} className="text-gold/30 flex-shrink-0" />
+              <span className="text-gold/70 tracking-[0.2em] sm:tracking-[0.3em] text-[9px] sm:text-[11px] uppercase whitespace-nowrap">Book A Reading Today</span>
+              <Star size={10} className="text-gold/30 flex-shrink-0" />
+            </div>
+          ))}
+        </div>
+      </div>
+
       {/* ═══════════════ CONSULTATION & SPELLS ROW ═══════════════ */}
       <section className="bg-noir py-20 relative overflow-hidden">
         <style dangerouslySetInnerHTML={{
@@ -130,9 +169,18 @@ export default function Home() {
             <h2 className="font-display text-3xl sm:text-4xl md:text-5xl text-white tracking-wide mb-4">
               Consultations & Spells
             </h2>
-            <p className="text-gold text-sm tracking-[0.25em] uppercase">
+            <p className="text-gold text-sm tracking-[0.25em] uppercase mb-8">
               Book a session or cast a spell — unveil the truth
             </p>
+            <Link href="/services">
+              <motion.button
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                className="bg-transparent border border-white/20 text-white px-8 py-3 text-xs tracking-[0.2em] uppercase hover:bg-white hover:text-noir transition-all duration-300"
+              >
+                View All Services
+              </motion.button>
+            </Link>
           </motion.div>
 
           {/* Consultations */}
@@ -142,7 +190,7 @@ export default function Home() {
               <span>Tarot Consultations</span>
               <Sparkles size={20} className="text-gold" />
             </h3>
-            <div className="flex md:grid md:grid-cols-3 gap-5 overflow-x-auto pb-6 md:pb-0 snap-x snap-mandatory no-scroll">
+            <div className="flex md:grid md:grid-cols-4 gap-5 overflow-x-auto pb-6 md:pb-0 snap-x snap-mandatory no-scroll">
               {sessions.map((session, index) => {
                 const Icon = session.icon;
                 return (
@@ -152,7 +200,7 @@ export default function Home() {
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true, margin: "-50px" }}
                     transition={{ delay: index * 0.15, duration: 0.4 }}
-                    className="shrink-0 w-[85%] sm:w-[60%] md:w-auto snap-center"
+                    className={`shrink-0 w-[85%] sm:w-[60%] md:w-auto snap-center ${index > 0 ? "hidden md:block" : ""}`}
                   >
                     <div className="border border-white/5 rounded-xl p-8 text-center hover:border-gold/30 hover:bg-white/[0.02] transition-all duration-500 bg-black/40 backdrop-blur-md h-full flex flex-col items-center">
                       <div className="mb-6 mt-2">
@@ -176,6 +224,26 @@ export default function Home() {
                   </motion.div>
                 );
               })}
+              {/* "View Consultations" Card */}
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-50px" }}
+                className="shrink-0 w-[85%] sm:w-[60%] md:w-auto snap-center"
+              >
+                <Link href="/services?tab=consultations" className="block h-full">
+                  <div className="border border-white/5 rounded-xl p-8 text-center hover:border-gold/30 hover:bg-white/[0.02] transition-all duration-500 bg-black/40 backdrop-blur-md h-full flex flex-col items-center justify-center min-h-[350px]">
+                    <div className="mb-6 mt-2">
+                      <Sparkles strokeWidth={1} size={42} className="text-gold" />
+                    </div>
+                    <h4 className="font-display text-2xl text-white mb-4">View All<br />Consultations</h4>
+                    <p className="text-white/60 font-serif-heading text-lg mb-8 flex-1 leading-relaxed">Discover 10+ profound readings to unveil your path.</p>
+                    <div className="w-full py-3 border border-gold/20 text-gold rounded-lg text-xs tracking-wider uppercase flex justify-center items-center gap-2">
+                      <ChevronRight size={14} /> See All
+                    </div>
+                  </div>
+                </Link>
+              </motion.div>
             </div>
           </div>
 
@@ -186,7 +254,7 @@ export default function Home() {
               <span className="tracking-widest uppercase text-lg">Spell Casting</span>
               <Star size={18} strokeWidth={1.5} className="text-gold opacity-70" />
             </h3>
-            <div className="flex md:grid md:grid-cols-3 gap-5 overflow-x-auto pb-6 md:pb-0 snap-x snap-mandatory no-scroll">
+            <div className="flex md:grid md:grid-cols-4 gap-5 overflow-x-auto pb-6 md:pb-0 snap-x snap-mandatory no-scroll">
               {spells.map((spell, index) => {
                 const Icon = spell.icon;
                 return (
@@ -196,7 +264,7 @@ export default function Home() {
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true, margin: "-50px" }}
                     transition={{ delay: index * 0.15, duration: 0.4 }}
-                    className="shrink-0 w-[85%] sm:w-[60%] md:w-auto snap-center"
+                    className={`shrink-0 w-[85%] sm:w-[60%] md:w-auto snap-center ${index > 0 ? "hidden md:block" : ""}`}
                   >
                     <div className="border border-white/5 rounded-xl p-8 text-center hover:border-gold/30 hover:bg-white/[0.02] transition-all duration-500 bg-black/40 backdrop-blur-md h-full flex flex-col items-center">
                       <div className="mb-6 mt-2">
@@ -217,6 +285,26 @@ export default function Home() {
                   </motion.div>
                 );
               })}
+              {/* "View Spells" Card */}
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-50px" }}
+                className="shrink-0 w-[85%] sm:w-[60%] md:w-auto snap-center"
+              >
+                <Link href="/services?tab=spells" className="block h-full">
+                  <div className="border border-white/5 rounded-xl p-8 text-center hover:border-gold/30 hover:bg-white/[0.02] transition-all duration-500 bg-black/40 backdrop-blur-md h-full flex flex-col items-center justify-center min-h-[350px]">
+                    <div className="mb-6 mt-2">
+                      <Star strokeWidth={1} size={42} className="text-gold" />
+                    </div>
+                    <h4 className="font-display text-2xl text-white mb-4">View All<br />100+ Spells</h4>
+                    <p className="text-white/60 font-serif-heading text-lg mb-8 flex-1 leading-relaxed">Shape your reality with ancient enchantments.</p>
+                    <div className="w-full py-3 border border-gold/20 text-gold rounded-lg text-xs tracking-wider uppercase flex justify-center items-center gap-2">
+                      <ChevronRight size={14} /> See All
+                    </div>
+                  </div>
+                </Link>
+              </motion.div>
             </div>
           </div>
         </div>
@@ -288,11 +376,11 @@ export default function Home() {
             transition={{ duration: 0.8 }}
             className="w-64 md:w-80 flex-shrink-0"
           >
-            <div className="arch-rounded overflow-hidden border-2 border-gold/20">
+            <div className="arch-rounded border border-gold/30 p-2.5">
               <img
                 src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT4ToiCciiMMj_wCGWZuHANmW4hfDh5klfbbw&s"
                 alt="New Products"
-                className="w-full aspect-[3/4] object-cover"
+                className="w-full aspect-[3/4] object-cover arch-rounded"
               />
             </div>
           </motion.div>
